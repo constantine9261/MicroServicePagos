@@ -7,6 +7,11 @@ import com.bank.microservicePayment.Model.api.payment.PaymentRequest;
 import com.bank.microservicePayment.Model.api.shared.ResponseDto;
 import com.bank.microservicePayment.Model.api.shared.ResponseDtoBuilder;
 import com.bank.microservicePayment.business.service.IPaymentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +27,13 @@ public class PaymentController {
     @Autowired
     private IPaymentService paymentExpenseService;
 
-    // Registrar un pago o consumo
+    @Operation(summary = "Registrar un pago o consumo", description = "Registra una nueva transacción de pago o consumo basado en la solicitud proporcionada.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Transacción registrada con éxito",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
+            @ApiResponse(responseCode = "500", description = "Error desconocido")
+    })
     @PostMapping
     public Mono<ResponseDto<PaymentDto>> registerPaymentExpense(@RequestBody PaymentRequest request) {
         return paymentExpenseService.registerPaymentExpense(request)
@@ -32,4 +43,6 @@ public class PaymentController {
                     return Mono.just(ResponseDtoBuilder.error("Error desconocido"));
                 });
     }
+
+
 }
