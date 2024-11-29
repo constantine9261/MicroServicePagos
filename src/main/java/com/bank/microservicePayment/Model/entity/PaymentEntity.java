@@ -20,6 +20,7 @@ public class PaymentEntity implements Serializable {
 
     private String customerId;
     private String accountId;
+    private String creditId;      // Identificador del crédito asociado
     private Double amount;
     private String type;  // "PAYMENT" o "EXPENSE"
     private LocalDateTime transactionDate;

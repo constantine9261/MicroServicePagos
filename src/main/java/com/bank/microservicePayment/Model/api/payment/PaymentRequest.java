@@ -8,4 +8,6 @@ public class PaymentRequest {
     private String accountId;
     private Double amount;
     private String type;  // "PAYMENT" o "EXPENSE"
+    private String creditId; // Identificador del crédito (nuevo campo)
+
 }

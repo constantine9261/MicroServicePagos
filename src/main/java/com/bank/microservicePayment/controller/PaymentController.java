@@ -45,4 +45,16 @@ public class PaymentController {
     }
 
 
+    @Operation(summary = "Pagar producto de crédito", description = "Permite a un cliente pagar un producto de crédito")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Pago realizado con éxito"),
+            @ApiResponse(responseCode = "404", description = "Producto no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    @PostMapping("/pay-credit")
+    public Mono<ResponseDto<String>> payCredit(@RequestBody PaymentRequest request) {
+        return paymentExpenseService.payCredit(request)
+                .map(response -> ResponseDtoBuilder.success("Pago realizado con éxito", response));
+    }
+
 }

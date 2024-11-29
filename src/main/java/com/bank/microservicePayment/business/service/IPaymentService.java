@@ -10,4 +10,6 @@ import reactor.core.publisher.Mono;
 public interface IPaymentService {
     // Método para registrar un pago o consumo
     Mono<PaymentDto> registerPaymentExpense(PaymentRequest request);
+
+    Mono<String> payCredit(PaymentRequest request);
 }
